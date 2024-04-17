@@ -175,6 +175,8 @@ locals {
 #!/bin/bash
 yum install python -y    # python 설치
 yum install socat -y     # socat 설치
+yum install pip -y
+pip install requests
 
 yum install docker -y    # Docker 설치
 systemctl enable docker  # Docker 부팅 시 자동 시작 설정
