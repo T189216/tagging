@@ -173,6 +173,14 @@ resource "aws_iam_instance_profile" "instance_profile_1" {
 locals {
   ec2_user_data_base = <<-END_OF_FILE
 #!/bin/bash
+
+sudo dd if=/dev/zero of=/swapfile bs=128M count=32                  # 4GB 스왑 파일 생성
+sudo chmod 600 /swapfile                                            # 스왑 파일 권한 변경
+sudo mkswap /swapfile                                               # 스왑 파일을 스왑 공간으로 설정
+sudo swapon /swapfile                                               # 스왑 파일 활성화
+sudo swapon -s                                                      # 활성화된 스왑 파일 목록 확인
+sudo sh -c 'echo "/swapfile swap swap defaults 0 0" >> /etc/fstab'  # 부팅 시 스왑 파일 자동 활성화 설정
+
 yum install python -y    # python 설치
 yum install socat -y     # socat 설치
 yum install pip -y
@@ -204,13 +212,6 @@ docker run \
   redis
 
 yum install git -y  # Git 설치
-
-sudo dd if=/dev/zero of=/swapfile bs=128M count=32  # 4GB 스왑 파일 생성
-sudo chmod 600 /swapfile  # 스왑 파일 권한 변경
-sudo mkswap /swapfile  # 스왑 파일을 스왑 공간으로 설정
-sudo swapon /swapfile  # 스왑 파일 활성화
-sudo swapon -s  # 활성화된 스왑 파일 목록 확인
-sudo sh -c 'echo "/swapfile swap swap defaults 0 0" >> /etc/fstab'  # 부팅 시 스왑 파일 자동 활성화 설정
 
 END_OF_FILE
 }
