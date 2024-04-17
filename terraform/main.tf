@@ -222,7 +222,7 @@ ${local.ec2_user_data_base}
 
 mkdir -p /docker_projects/tagging/source
 cd /docker_projects/tagging/source
-git clone https://github.com/T189216/tagging .
+git clone https://github.com/t189216/tagging .
 
 # 도커 이미지 생성
 docker build -t tagging_1:1 .

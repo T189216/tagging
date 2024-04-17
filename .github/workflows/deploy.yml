@@ -81,6 +81,6 @@ jobs:
           comment: Deploy
           command: |
             mkdir -p /docker_projects/tagging
-            curl -o /docker_projects/tagging/zero_downtime_deploy.py https://raw.githubusercontent.com/T189216/tagging/main/infraScript/zero_downtime_deploy.py
+            curl -o /docker_projects/tagging/zero_downtime_deploy.py https://raw.githubusercontent.com/t189216/tagging/main/infraScript/zero_downtime_deploy.py
             chmod +x /docker_projects/tagging/zero_downtime_deploy.py
             /docker_projects/tagging/zero_downtime_deploy.py
