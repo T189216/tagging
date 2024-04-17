@@ -174,6 +174,7 @@ locals {
   ec2_user_data_base = <<-END_OF_FILE
 #!/bin/bash
 yum install python -y    # python 설치
+yum install socat -y     # socat 설치
 
 yum install docker -y    # Docker 설치
 systemctl enable docker  # Docker 부팅 시 자동 시작 설정
