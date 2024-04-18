@@ -4,11 +4,17 @@ spring:
   profiles:
     active: dev
     include: secret
-  data:
-    redis:
-      host: 52.79.93.170
-      port: 6379
-      password: ON_SECRET
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.session.SessionAutoConfiguration
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: ${spring.servlet.multipart.max-file-size}
+  threads:
+    virtual:
+      enabled: true
   datasource:
     url: jdbc:mysql://52.79.93.170:3306/tagging_prod
     username: root
