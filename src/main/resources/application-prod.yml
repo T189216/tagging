@@ -7,5 +7,8 @@ spring:
   data:
     redis:
       host: 172.17.0.1
-    datasource:
-      url: jdbc:mysql://172.17.0.1:3306/tagging_prod
+  datasource:
+    url: jdbc:mysql://172.17.0.1:3306/tagging_prod
+    username: root
+    password: ${custom.datasource.password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
