@@ -16,6 +16,21 @@ spring:
     username: root
     password: ${custom.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+        highlight_sql: false
+        use_sql_comments: false
+logging:
+  level:
+    com.ll.tagging_2: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.orm.jdbc.bind: INFO
+    org.hibernate.orm.jdbc.extract: INFO
+    org.springframework.transaction.interceptor: INFO
 custom:
   temp:
     dirPath: /tmp
