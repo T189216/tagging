@@ -16,3 +16,8 @@ spring:
     username: root
     password: ${custom.datasource.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
+custom:
+  temp:
+    dirPath: /tmp
+  gen:
+    dirPath: /gen

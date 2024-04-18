@@ -24,3 +24,8 @@ spring:
     user:
       name: user1
       password: 1234
+custom:
+  temp:
+    dirPath: ${HOME}/Desktop/os/temp
+  gen:
+    dirPath: ${HOME}/Desktop/os/temp/tagging_dev/gen
