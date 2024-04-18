@@ -14,3 +14,7 @@ spring:
     username: root
     password: ON_SECRET
     driver-class-name: com.mysql.cj.jdbc.Driver
+  security:
+    user:
+      name: user1
+      password: 1234
