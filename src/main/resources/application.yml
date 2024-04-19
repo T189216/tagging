@@ -16,10 +16,10 @@ spring:
     virtual:
       enabled: true
   datasource:
-    url: jdbc:mysql://52.79.93.170:3306/tagging_prod
-    username: root
-    password: ON_SECRET
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:./db;MODE=MYSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   security:
     user:
       name: user1
