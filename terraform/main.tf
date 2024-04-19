@@ -18,9 +18,9 @@ provider "aws" {
 resource "aws_vpc" "vpc_1" {
   cidr_block = "10.0.0.0/16"
 
-  # 무조건 켜세요.
+  # DNS 지원을 활성화
   enable_dns_support   = true
-  # 무조건 켜세요.
+  # DNS 호스트 이름 지정을 활성화
   enable_dns_hostnames = true
 
   tags = {
@@ -32,7 +32,7 @@ resource "aws_subnet" "subnet_1" {
   vpc_id                  = aws_vpc.vpc_1.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "${var.region}a"
-  map_public_ip_on_launch = true
+  map_public_ip_on_launch = true # 이 서브넷이 배포되는 인스턴스에 공용 IP를 자동으로 할당
 
   tags = {
     Name = "${var.prefix}-subnet-1"
