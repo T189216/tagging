@@ -18,9 +18,9 @@ provider "aws" {
 resource "aws_vpc" "vpc_1" {
   cidr_block = "10.0.0.0/16"
 
-  # DNS 지원을 활성화
-  enable_dns_support = true
-  # DNS 호스트 이름 지정을 활성화
+  # 무조건 켜세요.
+  enable_dns_support   = true
+  # 무조건 켜세요.
   enable_dns_hostnames = true
 
   tags = {
@@ -32,7 +32,7 @@ resource "aws_subnet" "subnet_1" {
   vpc_id                  = aws_vpc.vpc_1.id
   cidr_block              = "10.0.1.0/24"
   availability_zone       = "${var.region}a"
-  map_public_ip_on_launch = true # 이 서브넷이 배포되는 인스턴스에 공용 IP를 자동으로 할당
+  map_public_ip_on_launch = true
 
   tags = {
     Name = "${var.prefix}-subnet-1"
@@ -61,7 +61,6 @@ resource "aws_subnet" "subnet_3" {
   }
 }
 
-# AWS 인터넷 게이트웨이
 resource "aws_internet_gateway" "igw_1" {
   vpc_id = aws_vpc.vpc_1.id
 
@@ -70,11 +69,9 @@ resource "aws_internet_gateway" "igw_1" {
   }
 }
 
-# AWS 라우트 테이블
 resource "aws_route_table" "rt_1" {
   vpc_id = aws_vpc.vpc_1.id
 
-  # 라우트 규칙을 설정. 모든 트래픽(0.0.0.0/0)을 'igw_1' 인터넷 게이트웨이로 보냄
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.igw_1.id
@@ -85,7 +82,6 @@ resource "aws_route_table" "rt_1" {
   }
 }
 
-# 라우트 테이블과 서브넷을 연결
 resource "aws_route_table_association" "association_1" {
   subnet_id      = aws_subnet.subnet_1.id
   route_table_id = aws_route_table.rt_1.id
@@ -101,23 +97,20 @@ resource "aws_route_table_association" "association_3" {
   route_table_id = aws_route_table.rt_1.id
 }
 
-# AWS 보안 그룹 리소스
 resource "aws_security_group" "sg_1" {
   name = "${var.prefix}-sg-1"
 
-  # 인바운드 트래픽 규칙
   ingress {
-    from_port = 0
-    to_port   = 0
-    protocol = "all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "all"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # 아웃바운드 트래픽 규칙
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol = "all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "all"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -181,16 +174,16 @@ sudo swapon /swapfile                                               # 스왑 파
 sudo swapon -s                                                      # 활성화된 스왑 파일 목록 확인
 sudo sh -c 'echo "/swapfile swap swap defaults 0 0" >> /etc/fstab'  # 부팅 시 스왑 파일 자동 활성화 설정
 
-yum install python -y    # python 설치
-yum install socat -y     # socat 설치
+yum install python -y
 yum install pip -y
 pip install requests
+yum install socat -y
 
-yum install docker -y    # Docker 설치
+yum install docker -y
 systemctl enable docker  # Docker 부팅 시 자동 시작 설정
-systemctl start docker   # Docker 서비스 시작
+systemctl start docker
 
-curl -L https:#github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose  # 최신 Docker Compose 다운로드 및 설치
+curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose  # 최신 Docker Compose 다운로드 및 설치
 chmod +x /usr/local/bin/docker-compose  # Docker Compose 실행 권한 부여
 
 docker run --name mysql_1 \
@@ -222,7 +215,7 @@ docker run -d \
     --restart unless-stopped \
     jc21/nginx-proxy-manager:latest
 
-yum install git -y  # Git 설치
+yum install git -y
 
 END_OF_FILE
 }
@@ -237,7 +230,7 @@ resource "aws_instance" "ec2_1" {
 
   # 인스턴스에 IAM 역할 연결
   iam_instance_profile = aws_iam_instance_profile.instance_profile_1.name
-  
+
   tags = {
     Name = "${var.prefix}-ec2-1"
   }
